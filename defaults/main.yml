@@ -1,0 +1,8 @@
+---
+# defaults file for ansible-cloudflared-DoH
+
+cloudflared_rpm_path: /opt/cloudflared
+cloudflared_download_url: https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.rpm
+cloudflared_conf_dir: /etc/default/
+cloudflared_bin_path: /usr/local/bin/cloudflared
+cloudflared_systemd_path: /etc/systemd/system/

@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  role_name: cloudflared
+  author: zyzyx03
+  description: Simple role to install and configure Cloudflared DoH
+  license: GPLv2
+  min_ansible_version: 2.9
+  platforms:
+    - name: EL
+      versions:
+        - 7
+  galaxy_tags:
+    - pihole
+    - redhat
+    - rhel
+    - DoH
+    - Cloudflared

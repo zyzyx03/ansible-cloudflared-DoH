@@ -1,0 +1,5 @@
+---
+# handlers file for ansible-cloudflared-DoH
+- name: Daemon Reload
+  systemd:
+    daemon_reload: yes

@@ -1,0 +1,63 @@
+---
+# Ansible task for cloudflared DoH
+- name: Install bind-utils
+  package:
+    name: bind-utils
+    state: present
+
+- name: Create Directory
+  file:
+    path: "{{ cloudflared_rpm_path }}"
+    state: directory
+    mode: 0755
+
+- name: Check if cloudflare rpm already available
+  stat:
+    path: "{{cloudflared_rpm_path}}/cloudflared-stable-linux-amd64.rpm"
+  register: st
+
+- name: Download cloudflared DoH
+  get_url:
+      url: "{{ cloudflared_download_url }}"
+      dest: "{{ cloudflared_rpm_path }}"
+  when: not st.stat.exists
+
+- name: Install cloudflared DoH
+  yum:
+    name: "{{ cloudflared_rpm_path }}/cloudflared-stable-linux-amd64.rpm"
+    state: present
+
+- name: Create cloudflared user
+  user:
+    name: cloudflared
+    shell: /usr/sbin/nologin
+    create_home: no
+
+- name: Copy cloudflared configuration file
+  copy:
+    src: cloudflared
+    dest: "{{ cloudflared_conf_dir }}"
+    owner: cloudflared
+    group: cloudflared
+    mode: 0644 
+
+- name: Change cloudflared bin permission
+  file:
+    path: "{{ cloudflared_bin_path }}"
+    owner: cloudflared
+    group: cloudflared
+    mode: 0751
+
+- name: Create systemd file
+  copy:
+    src: cloudflared.service
+    dest: "{{ cloudflared_systemd_path }}"
+    mode: 0644
+  notify:
+    - Daemon Reload
+
+- name: Start cloudflared service
+  service:
+    name: cloudflared
+    state: started
+    enabled: yes
