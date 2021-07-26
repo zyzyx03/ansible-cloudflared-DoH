@@ -1,7 +1,7 @@
 ---
 # Ansible task for cloudflared DoH
 - name: Install bind-utils
-  package:
+  yum:
     name: bind-utils
     state: present
 
