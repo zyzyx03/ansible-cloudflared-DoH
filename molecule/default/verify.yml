@@ -3,8 +3,29 @@
 
 - name: Verify
   hosts: all
-  gather_facts: false
+  gather_facts: true
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+    - name: Gather the package manager facts
+      package_facts:
+        manager: auto
+    - name: Assert the packages
+      assert:
+        that:
+          - "'bind-utils' in ansible_facts.packages" 
+          - "'cloudflared' in ansible_facts.packages" 
+        fail_msg: "Package not installed"
+        success_msg: "Package was installed"
+
+    - name: Gather the services facts
+      service_facts:
+    - name: Assert running services
+      assert:
+        that:
+          - "'running' in ansible_facts.services['cloudflared.service'].state"
+          - "'enabled' in ansible_facts.services['cloudflared.service'].status"
+        fail_msg: "cloudflared service is stopped"
+        success_msg: "cloudflared service is running and enabled"
+
+    - name: check port 5053
+      wait_for:
+        port: 5053

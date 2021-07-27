@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include ansible-cloudflared-DoH"
+    - name: "Include ansible-cloudflared-doh"
       include_role:
-        name: "ansible-cloudflared-DoH"
+        name: "ansible-cloudflared-doh"
