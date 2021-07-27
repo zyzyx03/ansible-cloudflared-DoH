@@ -1,4 +1,4 @@
-# [Cloudflared DNS over HTTPS](#Cloudflared DNS over HTTPS)
+# [Cloudflared DNS over HTTPS](#Cloudflared)
 
 ## [Example Playbook](#example-playbook)
 
